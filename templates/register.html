@@ -1,0 +1,135 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Register Page</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Aug 30 2023 with Bootstrap v5.3.1
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <main>
+    <div class="container ">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <!-- End Logo -->
+
+              <div class="card mb-3 ">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4" style = "border-bottom-color:blue;">Create an Account</h5>
+					
+                      <!--  Messages section -->
+                        
+                        {% if messages %}
+                        {%for message in messages%}
+          
+                        <div class="alert alert-{{message.tags}} alert-dismissible fade show no-popup" role="alert">
+                          {{message}}
+                          <button onclick="alert.close()" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <!-- message ends -->
+                  </div>
+				  
+
+                  <form method='POST' class="row g-3 needs-validation">
+                    {% csrf_token %}
+                    <div class="col-12">
+                      <label for="yourName" class="form-label" style="font-size: 14px; color:navy">Registration Number</label>
+                      <input class="form-control form-control-user"  type="text" autofocus name="regnumber" inputmode="numeric" required="" minlength="10" maxlength="10">
+                     
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label" style="font-size: 14px; color:navy">Email</label>
+                      <input type="email" name="email" class="form-control" autofill='' id="yourEmail" required>
+                      <div class="text-center btn-danger " style="font-size: 11px; color:blue">Please enter a valid Email adddress for contact purpose!</div>
+                    </div>
+
+										
+                     			  
+					  <div class="col-6">
+					  <input type="password" class="form-control" style="font-size: 13px; color:blue" required name="password" placeholder='Password'>
+					  </div>
+					  
+					  <div class="col-6" >
+					  <input type="password" name='repassword' style="font-size: 13px; color:blue" class="form-control" required placeholder='Repeat password'>
+
+					</div>
+					
+					
+				
+					  <div class="col-6">
+                      <input type="date" name="bdate" class="form-control" required>
+					  </div>
+					  <div class="col-6">
+                      <p class="text-center btn-danger " style="font-size: 11px; color:blue">We'd love to send you birthday wishes</p>
+                      					  
+                    </div>
+
+
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Create My Account</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Already have an account? <a href="{%url 'login'%}">Log in</a></p>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+
+              <div class="text-start" style="font-size: 11px;">
+                
+                Copyright © Dept Electronic &amp; Computer Engineering 2021
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+      <!-- loader -->
+ 
+
+</body>
+
+</html>
