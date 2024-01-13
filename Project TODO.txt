@@ -1,0 +1,27 @@
+ATTENDACE APP FOR ECE.
+
+PAGES
+=====
+1. intro (first signup)
+2. user_signup !
+3. user_login!
+4. Dashboard!
+5. Chat ( not yet)
+6. logout!
+7. About page
+8. admin_attendance page
+9. admin_generate_report
+
+FUNCTIONALITY:
+-----------
+React_native ble scanner
+
+FORMS:
+-----
+login (Regnumber, password)
+signup (Regnumber, password, password1, birthday_later, email, phonenumber)
+
+admin login = (admin, #Master5nea)
+
+Student - authcode, phone, admin,
+
