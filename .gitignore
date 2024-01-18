@@ -1,6 +1,8 @@
 *.pyc 
 *~
 __pycache__
+students\__pycache__
+attendance_system\__pycache__
 db.sqlite3
 /static
 .DS_Store
