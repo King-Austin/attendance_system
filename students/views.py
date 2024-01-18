@@ -103,7 +103,7 @@ def loginView(request):
 def logoutView(request):
     logout(request)
     messages.success(request, 'You have successfully logged out.')
-    return redirect ('/login')
+    return redirect ('login')
 
 def userProfile(request):
     ref = Student.objects.get(reg_number=request.user).sex
@@ -120,4 +120,35 @@ def userSetting(request):
 def forgotPassword(request):
     
     return render(request, template_name='forgot.html')
+
+@login_required()
+def passwordChange(request):
+    user = request.user
+    if request.method == 'POST':
+        repassword = request.POST['repassword']
+        password = request.POST['password']
+
+        #Validating Password Match
+        if password == repassword:
+            ref = User.objects.get(username=user)
+            ref.set_password(password)
+            ref.save()
+            message = 'Password Update Successful! Login here'
+            messages.success(request, message)
+            logout(request)
+            return redirect('login')
+
+        else:
+            message = 'Password Mismatch, try again'
+            messages.warning(request, message)
+            return redirect ('setting')
+    else:
+        return redirect('setting')
+
+@login_required()
+def editProfile(request):
+    
+    pass
+
+
     
