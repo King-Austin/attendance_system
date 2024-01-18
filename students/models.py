@@ -14,7 +14,7 @@ class Student(models.Model):
     birth_date = models.DateField(verbose_name = 'Date of Birth', null=True, blank=True)
     auth_code = models.CharField(max_length=20, verbose_name= 'Auth Code', null=True, blank=True)
     phone = models.CharField(max_length=20, verbose_name='Phone',  null=True, blank=True)
-    admin = models.CharField(max_length=20, verbose_name='Admin', default='False' null=True, blank=True)
+    admin = models.CharField(max_length=20, verbose_name='Admin', default='False', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Student'
