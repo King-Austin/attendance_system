@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-#@login_required(login_url='/login')
+@login_required()
 def dashboard(request):
     if request.user.is_authenticated:   
         ref = Student.objects.get(reg_number=request.user).sex
