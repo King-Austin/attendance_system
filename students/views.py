@@ -142,7 +142,7 @@ def passwordChange(request):
     else:
         return redirect('setting')
 
-@login_required()
+@login_required() 
 def editProfile(request):
 
     if request.method == 'POST':
