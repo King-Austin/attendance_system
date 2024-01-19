@@ -117,10 +117,6 @@ def userSetting(request):
 
     return render(request, template_name='setting.html', context={'sex':sex})
 
-def forgotPassword(request):
-    
-    return render(request, template_name='forgot.html')
-
 @login_required()
 def passwordChange(request):
     user = request.user
@@ -148,7 +144,52 @@ def passwordChange(request):
 @login_required()
 def editProfile(request):
 
-    pass
+    if request.method == 'POST':
+        authcode = request.POST['authcode']
+        email = request.POST['email']
+        bdate = request.POST['bdate']
+        phone = request.POST['phone']
+
+        try:
+            user = User.objects.get(username=request.user)
+            student = Student.objects.get(reg_number=request.user)
+            user.email = email
+            student.auth_code, student.birth_date, student.phone, = authcode, bdate, phone
+
+            user.save()
+            student.save()
+            message = 'Profile Update Successful!'
+            messages.success(request, message)
+            
+            return redirect('setting')
+
+        except:
+            message = 'Something went wrong during the process!'
+            messages.warning(request, message)
+            return redirect ('setting')
+    else:
+        return redirect('setting')
+
+
+
+def forgotPassword(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+
+        try:
+            user = User.objects.get(username=request.user)
+
+            message = 'Profile Update Successful!'
+            messages.success(request, message)
+            
+            return redirect('setting')
+
+        except:
+            message = 'Something went wrong during the process!'
+            messages.warning(request, message)
+            return redirect ('setting')
+        
+    return render(request, template_name='forgot.html')
 
 def passwordResetDone(request):
     pass
