@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'attendance_system.wsgi.application'
+WSGI_APPLICATION = 'attendance_system.wsgi.app'
 
 
 # Database
