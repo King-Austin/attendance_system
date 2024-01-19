@@ -105,17 +105,17 @@ def logoutView(request):
     messages.success(request, 'You have successfully logged out.')
     return redirect ('login')
 
+@login_required()
 def userProfile(request):
-    ref = Student.objects.get(reg_number=request.user).sex
-    sex = {'M':'male'}.get(ref)
-
-    return render(request, template_name='profile.html', context={'sex':sex})
-    
-def userSetting(request):
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex)
 
+    return render(request, template_name='profile.html', context={'sex':sex, 'student':student})
 
+@login_required()  
+def userSetting(request):
+    student = Student.objects.get(reg_number=request.user)
+    sex = {'M':'male'}.get(student.sex)
     return render(request, template_name='setting.html', context={'sex':sex, 'student':student})
 
 @login_required()
@@ -130,7 +130,7 @@ def passwordChange(request):
             ref = User.objects.get(username=user)
             ref.set_password(password)
             ref.save()
-            message = 'Password Update Successful! Login here'
+            message = 'Password Update Successful! Login'
             messages.success(request, message)
             logout(request)
             return redirect('login')
@@ -165,7 +165,7 @@ def editProfile(request):
             return redirect('setting')
 
         except:
-            message = 'Something went wrong during the process!'
+            message = 'Something went wrong!'
             messages.warning(request, message)
             return redirect ('setting')
     else:
@@ -186,7 +186,7 @@ def forgotPassword(request):
             return redirect('setting')
 
         except:
-            message = 'Something went wrong during the process!'
+            message = 'Something went wrong !'
             messages.warning(request, message)
             return redirect ('setting')
         

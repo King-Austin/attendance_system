@@ -85,7 +85,7 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullname" type="text" class="form-control" id="fullName" disabled value="{{request.user.first_name}} {{request.user.last_name}}">
+                        <input name="fullname" type="text" class="form-control small" id="fullName" disabled value="{{request.user.first_name}} {{request.user.last_name}}">
                       </div>
                     </div>
 
@@ -93,14 +93,14 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Auth Code</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nickname" type="text" class="form-control" id="fullName" maxlength=4, minlength=4 required value={{user.auth_code|default:"Empty"}}>
+                        <input name="authcode" type="text" class="form-control small" id="fullName" maxlength=4, placeholder="4-digit code"minlength=4 required value="{{student.auth_code|default:''}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input required name="phone" type="numeric" maxlength=11 minlength=11 class="form-control" id="Phone" value="st">
+                        <input required name="phone" type="numeric" maxlength=11 minlength=11 class="form-control small"  placeholder="080123***" id="Phone" value="{{student.phone|default:''}}">
                       </div>
                     </div>
 
@@ -117,7 +117,7 @@
                   <div class="row mb-3">
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Special Date</label>
                     <div class="col-md-8 col-lg-9">
-                      <input required name="bdate" type="date" class="form-control" required id="date" value=>
+                      <input required name="bdate" type="date" class="form-control" required id="date" value="{{student.birth_date|date:'Y-m-d'|default:'null'}}">
                       <span class="small">looking forward to send you wishes</span>
                     </div>
                   </div>

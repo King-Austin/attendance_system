@@ -73,29 +73,29 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Auth Code</div>
-                  <div class="col-lg-9 col-md-8">2331</div>
+                  <div class="col-lg-9 col-md-8">{{student.auth_code}}</div>
                 </div>
 
                 
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Phone</div>
-                  <div class="col-lg-9 col-md-8">(234) 486-3538-000</div>
+                  <div class="col-lg-9 col-md-8">{{student.phone}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8">nworahebuka.a@gmail.com</div>
+                  <div class="col-lg-9 col-md-8">{{request.user.email}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Birth Date</div>
-                  <div class="col-lg-9 col-md-8">January 6th 1800</div>
+                  <div class="col-lg-9 col-md-8">{{student.birth_date}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Admin</div>
-                  <div class="col-lg-9 col-md-8">False</div>
+                  <div class="col-lg-9 col-md-8">{{student.admin}}</div>
                 </div>
 
               </div>
