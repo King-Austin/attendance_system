@@ -112,10 +112,11 @@ def userProfile(request):
     return render(request, template_name='profile.html', context={'sex':sex})
     
 def userSetting(request):
-    ref = Student.objects.get(reg_number=request.user).sex
-    sex = {'M':'male'}.get(ref)
+    student = Student.objects.get(reg_number=request.user)
+    sex = {'M':'male'}.get(student.sex)
 
-    return render(request, template_name='setting.html', context={'sex':sex})
+
+    return render(request, template_name='setting.html', context={'sex':sex, 'student':student})
 
 @login_required()
 def passwordChange(request):

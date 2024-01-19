@@ -59,11 +59,28 @@
               </ul>
               <div class="tab-content pt-2">
 
+
+					<!--  Messages section -->
+					
+          {% if messages %}
+          {%for message in messages%}
+
+          <div class="alert alert-{{message.tags}} alert-dismissible small fade show no-popup" role="alert">
+            {{message}}
+            <button onclick="alert.close()" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+                                
+          {%endfor%}
+        {%endif%}
+      <!-- message ends -->
+
                 
                 <div class="tab-pane fade show active profile-edit" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form method='POST'  action="{% url 'eprofile'%}">
+                    {% csrf_token %}
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
@@ -72,7 +89,7 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Auth Code</label>
                       <div class="col-md-8 col-lg-9">
@@ -81,9 +98,9 @@
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input required name="phone" type="text" maxlength=11 minlength=11 class="form-control" id="Phone" value="(234) 486-3538 x29071">
+                        <input required name="phone" type="numeric" maxlength=11 minlength=11 class="form-control" id="Phone" value="st">
                       </div>
                     </div>
 
@@ -101,7 +118,7 @@
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Special Date</label>
                     <div class="col-md-8 col-lg-9">
                       <input required name="bdate" type="date" class="form-control" required id="date" value=>
-                      <span>looking forward to send you wishes</span>
+                      <span class="small">looking forward to send you wishes</span>
                     </div>
                   </div>
 
@@ -117,8 +134,8 @@
                 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
-
+                  <form method='POST'  action="{% url 'pchange'%}">
+                    {% csrf_token %}
      
                     <div class="row mb-3">
                       <label for="password" class="col-md-4 col-lg-3 col-form-label">New Password</label>
