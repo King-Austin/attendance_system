@@ -9,3 +9,5 @@ db.sqlite3
 .vscode
 ECE_Student_Database (tab).txt
 Project TODO.txt
+*.pyc
+*.pyc

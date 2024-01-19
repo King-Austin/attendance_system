@@ -147,7 +147,10 @@ def passwordChange(request):
 
 @login_required()
 def editProfile(request):
-    
+
+    pass
+
+def passwordResetDone(request):
     pass
 
 

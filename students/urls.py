@@ -1,5 +1,4 @@
 from django.urls import path
-from django.contrib.auth import views as authViews
 from . import views
 
 urlpatterns = [
@@ -10,6 +9,11 @@ urlpatterns = [
     path('logout/', views.logoutView, name='logout'),
     path('profile/', views.userProfile, name='profile'),
     path('setting/', views.userSetting, name='setting'),
-    path('password_reset/', authViews.PasswordResetView.as_view(), name='forgot'),
+    ##POST request only
+    path('password_change/', views.passwordChange, name='pchange'),
+    path('edit_profile/', views.editProfile, name='eprofile'),
+    #---#
+    path('password_reset/', views.forgotPassword, name='reset'),
+    path('password_reset_done/', views.passwordResetDone, name='resetDone'),
     
 ]
