@@ -32,7 +32,7 @@
             <img src="{% static 'assets/img/female.jpg' %}" alt="Profile" class="rounded-circle">
             {%endif%}            
 
-            <h2>{{request.user.first_name}} {{request.user.last_name}}</h2>
+            <h2>{{request.user.first_name|title}} {{request.user.last_name|title}}</h2>
             <h3>-Student</h3>
             
           </div>
@@ -63,7 +63,7 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                  <div class="col-lg-9 col-md-8">{{request.user.first_name}} {{request.user.last_name}}</div>
+                  <div class="col-lg-9 col-md-8">{{request.user.first_name|title}} {{request.user.last_name|title}}</div>
                 </div>
 
                 <div class="row">

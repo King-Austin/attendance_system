@@ -68,12 +68,12 @@
 
             
 
-            <span class="d-md-block dropdown-toggle ps-2">{{request.user.first_name }} {{request.user.last_name}}</span>
+            <span class="d-md-block dropdown-toggle ps-2">{{request.user.first_name|upper }} {{request.user.last_name|upper}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>{{request.user.first_name}} {{request.user.last_name}}</h6>
+              <h6>{{request.user.first_name|title}} {{request.user.last_name|title}}</h6>
               <span>Student </span>
             </li>
             <li>
