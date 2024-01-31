@@ -44,7 +44,7 @@ def registerView(request):
                     messages.warning(request, 'Regnumber Already Exists.')
                     return redirect('register')
                 
-                elif User.objects.filter(email=email).exists():
+                elif User.objects.filter(email__iexact=email).exists():
                     messages.warning(request, 'Email Address Already Exists.')
                     return redirect('register')
                 

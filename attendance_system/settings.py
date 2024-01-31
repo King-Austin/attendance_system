@@ -142,7 +142,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # MESSAGES
 MESSAGE_TAGS = {
-    messages.ERROR: 'danger',
+    messages.WARNING: 'danger',
 }
 
 CSRF_SESSION_COOKIE_AGE = 60*60*24
