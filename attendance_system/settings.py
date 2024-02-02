@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+d(75up1d!kin5hu@q0ugamd3a-d_hfmim6!pgo^ywwgyx$i8('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app' 'localhost']
 
@@ -151,3 +151,16 @@ CSRF_SESSION_COOKIE_AGE = 60*60*24
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#-- Attendance Settings -- #
+COURSE = [
+    ('ECE 321', 'ECE 321'),
+    ('FEG 303', 'FEG 303'),
+    ('ELE 311', 'ELE 311'),
+    ('ECE 323', 'ECE 323'),
+    ('ELE 341', 'ELE 341'),
+    ('ECE 331', 'ECE 331'),
+    ('ELE 343', 'ELE 343'),
+    ('ELE 353', 'ELE 353'),         
+        
+].extend

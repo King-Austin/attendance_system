@@ -13,12 +13,14 @@ from django.contrib.auth.decorators import login_required
 
 @login_required()
 def dashboard(request):
-    if request.user.is_authenticated:   
+
+    
+    try:   
         ref = Student.objects.get(reg_number=request.user).sex
         sex = {'M':'male'}.get(ref)
-
-    else:
+    except:
         sex = 'M'
+
     return render(request, template_name='dashboard.html', context={'sex':sex})
 
     
