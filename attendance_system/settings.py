@@ -153,7 +153,7 @@ CSRF_SESSION_COOKIE_AGE = 60*60*24
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #-- Attendance Settings -- #
-COURSE = [
+COURSE_LIST = [
     ('ECE 321', 'ECE 321'),
     ('FEG 303', 'FEG 303'),
     ('ELE 311', 'ELE 311'),
@@ -163,4 +163,4 @@ COURSE = [
     ('ELE 343', 'ELE 343'),
     ('ELE 353', 'ELE 353'),         
         
-].extend
+]

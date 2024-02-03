@@ -1,41 +1,44 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class Course(models.Model):
-    name_choices =[
-        ('ECE 321', 'ECE 321'),
-        ('FEG 303', 'FEG 303'),
-        ('ELE 311', 'ELE 311'),
-        ('ECE 323', 'ECE 323'),
-        ('ELE 341', 'ELE 341'),
-        ('ECE 331', 'ECE 331'),
-        ('ELE 343', 'ELE 343'),
-        ('ELE 353', 'ELE 353'),         
-         
-    ]
+    name_choices = settings.COURSE_LIST
 
-    name = models.CharField(max_length=20, choices=name_choices)
-    attendees = models.ManyToManyField("Attendee", verbose_name=("Attendance"))
+    name = models.CharField(max_length=255, choices=name_choices)
+
     def __str__(self):
-        return (self.name)
-    
-class Attendance(models.Model):
-    course = models.ForeignKey('Course', on_delete=models.CASCADE)
-    attendee = models.ForeignKey("Attendee", verbose_name=("Student"), on_delete=models.CASCADE)
+        return self.name
 
+class Attendance(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=None)
+    day_number = models.PositiveIntegerField(default=1)
     start_date = models.DateField(auto_now=True)
     start_time = models.TimeField(auto_now=True)
-    day_number = models.PositiveIntegerField(default=1)
+    active = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ['course', 'day_number']
     def __str__(self):
-        return (f'{self.name}- Day {self.day_number}')
+        return f'{self.course} - Day {self.day_number}'
+
+#May be neccessary soonner
+ #   def duration(self):
+  #      return self.end_time - self.start_time
     
+    def total_attendees(self):
+        return self.attendee_set.count()
+    
+#-- Attendance Class -- #
+
 class Attendee(models.Model):
-    student = models.OneToOneField(User, on_delete=models.CASCADE)
-    signed_time = models.TimeField(auto_now=True)
+    attendance = models.ForeignKey(Attendance, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    signed_time = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
-        return (f'{self.student} -> {self.course} at:{self.signed_time}')
-    
+        return self.user.username
+
+    class Meta:
+        unique_together = ['attendance', 'user']
