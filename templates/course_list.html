@@ -1,0 +1,143 @@
+{% extends "partials/base.html" %}
+
+{% block title %} Courses {% endblock %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Courses</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Admin</li>
+          <li class="breadcrumb-item active">Courses</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+
+        <div class="card">
+
+             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+            Add New course
+            </button>
+            <div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title">Add Course</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                
+                                <form method='POST' action="{% url 'course_create' %}">
+                                        {% csrf_token %}
+                                        <label for='id_name'>Course:</label>
+                                        <select id='id_name' name='name' class='form-select'>
+                                            {% for course_choice in CourseForm.name.field.choices %}
+                                            <option>{{course_choice.0}} </option>
+                                            {% endfor %}
+                                        </select>
+                        
+                        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+            </div><!-- End Vertically centered Modal-->
+
+            
+        </div>
+
+
+    
+    
+      <section class="section dashboard">
+
+            <!--  Courses section -->
+    
+        {% if Courses %}
+        {%for course in courses%}
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+              <div class="row">
+    
+                <!-- Sales Card -->
+                <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card sales-card">
+    
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+    
+                        <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
+                      </ul>
+                    </div>
+    
+                    <div class="card-body">
+                      <h5 class="card-title"><i class="bi layers-fill"></i> <span> 2 </span></h5>  
+                      <div class="d-flex align-items-center">
+                        <div class="ps-3">
+                          <h6>{{course.name}}</h6>
+                        </div>
+                      </div>
+                    </div>
+    
+                  </div>
+                </div><!-- End Sales Card -->
+    
+                
+          </div>
+
+                                                    
+        {%endfor%}
+    {%endif%}
+<!-- message ends -->
+
+
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                    <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title"><i class="bi layers"></i> <span> 2 </span></h5>  
+                  <div class="d-flex align-items-center">
+                    <div class="ps-3">
+                      <h6>ECE 331</h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% endblock %}
