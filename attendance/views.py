@@ -52,23 +52,36 @@ def AttendanceList(request, pk):
 
 def AttendanceCreate(request, pk):
     if request.method == 'POST':
+        day_number = request.POST['daynumber']
         course = Course.objects.get(pk=pk)
+        try:
+            new = Attendance.objects.create(course=course, day_number=day_number)
+            new.save()
+            message = 'Creation Success'
+            messages.success(request, message)
+            return redirect('attendance_list')
         
-
-
-        else:
-            messages.warning(request, 'Course with Registered Day_number Already Exist')
-            return redirect('course_list')
+        except Exception as error:
+            messages.warning(request, error)
+            return redirect('attendance_list')
 
     else:
-        return redirect('course_list')
+        return redirect('attendance_list')
     
 
 
 
 def AttendanceDelete(request, pk):
-   
-   pass
+    try:
+            
+        attendance = Attendance.objects.get(pk=pk)
+        attendance.delete()
+        messages.success(request, 'Deleted Successfully')
+        return redirect('attendance_list')
+    
+    except Exception as error:
+        messages.warning(request, error)
+        return redirect('attendance_list')
 
 
 
