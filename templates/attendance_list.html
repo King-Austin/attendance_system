@@ -1,6 +1,6 @@
 {% extends "partials/base.html" %}
 
-{% block title %} Courses {% endblock %}
+{% block title %} Attendance {% endblock %}
 
 {% block content %}
 
@@ -11,7 +11,9 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">Admin</li>
-          <li class="breadcrumb-item active">Courses</li>
+          <li class="breadcrumb-item">Courses</li>
+          <li class="breadcrumb-item active">{{course.name}}</li>
+
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -20,31 +22,27 @@
         <div class="card">
 
              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-            Add New course
+            Create Attendance
             </button>
             <div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title">Add Course</h5>
+                            <h5 class="modal-title">New Session</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <div class="modal-body">
                                 
-                                <form method='POST' action="{% url 'course_create' %}">
+                                <form method='POST' action="{% url 'attendance_create' course.id %}">
                                         {% csrf_token %}
-                                        <label for='id_name'>Course:</label>
-                                        <select id='id_name' name='name' class='form-select'>
-                                            {% for course_choice in CourseForm.name.field.choices %}
-                                            <option>{{course_choice.0}} </option>
-                                            {% endfor %}
-                                        </select>
-                        
+                                        <label for='daynumber'>Day_Number</label>
+                                        <input class="form-control" id='daynumber' type="numeric" name="daynumber" required maxlength="3">
+                       
                         
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Initiate</button>
                                     </div>
                                 </form>
                             </div>
@@ -61,7 +59,7 @@
                 {% if messages %}
                     {%for message in messages%}
 
-        <div class="alert alert-{{message.tags}} alert-dismissible small fade show no-popup" role="alert">
+        <div class="alert alert-{{message.tags}} alert-dismissible small" role="alert">
         {{message}}
         <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -75,37 +73,37 @@
             <!--  Courses section -->
             
     
-        {% if courses %}
-        {%for course in courses%}
+        {% if attendances %}
+        {%for attendance in attendances%}
 
     
                 <!-- Sales Card -->
                 <div class="col-xxl-4 col-md-6">
-                  <div class="card info-card sales-card">
-    
-                    <div class="filter">
-                      <a class="icon" data-bs-toggle="dropdown"><i class="bi bi-justify"></i></a>
-                      <ul class="dropdown-menu">
-    
-                        <li><a href="{% url 'course_delete' course.id %}"><button class="dropdown-item" ><i class="bi bi-trash-fill"></i>delete</button></a></li>
-                      </ul>
-                    </div>
-    
-                    <div class="card-body">
-                      <div class="card-title bi-layers"> <span> {{course.total_attendance}} </span></div> 
-                      <div class="d-flex align-items-center">
-                        <div class="ps-3">
-                          <h6><a href="{% url 'attendance_list' course.id %}">{{course.name}}</a></h6>
+                    <div class="card info-card sales-card">
+      
+                      <div class="filter">
+                        <a class="icon" data-bs-toggle="dropdown"><i class="bi bi-justify"></i></a>
+                        <ul class="dropdown-menu">
+      
+                          <li><a href="{% url 'attendance_delete' attendance.id %}"><button class="dropdown-item" ><i class="bi bi-trash-fill"></i>delete</button></a></li>
+                        </ul>
+                      </div>
+      
+                      <div class="card-body">
+                        <div class="card-title bi-layers"> <span> {{attendance.total_attendees}} </span></div> 
+                        <div class="d-flex align-items-center">
+                          <div class="ps-3">
+                            <h6><a href="{% url 'attendance_list' course.id %}">{{course.day_number}}</a></h6>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                </div>
-            </div>
+                  </div>
+              </div>
 
                                                     
         {%endfor%}
         {%else%}
-        <h7>No Registered Courses !<h7>
+              <h7>No Registered Attendance !<h7>
     {%endif%}
 <!-- message ends -->
         </section>

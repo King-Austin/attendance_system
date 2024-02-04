@@ -3,14 +3,16 @@ from django.urls import reverse_lazy
 from .models import Course, Attendance, Attendee
 from django.contrib import messages
 from .forms import CourseForm
+from students.models import Student
 from django.shortcuts import render, redirect
 
 
 
 def CourseList(request):
     course = Course.objects.all().order_by('name')
-    
-    context = {'courses':course, 'CourseForm':CourseForm}
+    student = Student.objects.get(reg_number=request.user)
+    sex = {'M':'male'}.get(student.sex)
+    context = {'courses':course, 'CourseForm':CourseForm, 'sex':sex}
     return render(request, template_name='course_list.html', context=context)
 
 #-- Create a course-#
@@ -29,38 +31,41 @@ def CourseCreate(request):
         return redirect('course_list')
 
 
-class CourseDeleteView(DeleteView):
-    model = Course
-    template_name = 'course_list.html'
-    success_url = reverse_lazy('course_list')
+def CourseDelete(request, pk):
+    course = Course.objects.get(pk=pk)
+    course.delete()
+    messages.success(request, 'Deleted Successfully')
+
+    return redirect('course_list')
 
 #<<-- Attendance Views -->> 
-class AttendanceListView(ListView):
-    model = Attendance
-    template_name = 'attendance_list.html'
-    context_object_name = 'attendances'
+def AttendanceList(request, pk):
+    course = Course.objects.get(pk=pk)
+
+    attendance = Attendance.objects.filter(course=pk).order_by('start_date')
+    student = Student.objects.get(reg_number=request.user)
+    sex = {'M':'male'}.get(student.sex) # the need for the profile picture
+
+    context = {'attendances':attendance, 'course':course, 'sex':sex}
+    return render(request, template_name='attendance_list.html', context=context)
 
 class AttendanceDetailView(DetailView):
     model = Attendance
     template_name = 'attendance_detail.html'
     context_object_name = 'attendance'
 
-class AttendanceCreateView(CreateView):
+def AttendanceCreate(request):
     model = Attendance
     template_name = 'attendance_create.html'
     fields = '__all__'
     success_url = reverse_lazy('attendance_list')
 
-class AttendanceUpdateView(UpdateView):
-    model = Attendance
-    template_name = 'attendance_update.html'
-    fields = '__all__'
-    success_url = reverse_lazy('attendance_list')
 
-class AttendanceDeleteView(DeleteView):
-    model = Attendance
-    template_name = 'attendance_delete.html'
-    success_url = reverse_lazy('attendance_list')
+def AttendanceDelete(request):
+   
+   pass
+
+
 
 #<<-- Attendee Views -->
 class AttendeeListView(ListView):
