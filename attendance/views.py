@@ -49,19 +49,24 @@ def AttendanceList(request, pk):
     context = {'attendances':attendance, 'course':course, 'sex':sex}
     return render(request, template_name='attendance_list.html', context=context)
 
-class AttendanceDetailView(DetailView):
-    model = Attendance
-    template_name = 'attendance_detail.html'
-    context_object_name = 'attendance'
 
-def AttendanceCreate(request):
-    model = Attendance
-    template_name = 'attendance_create.html'
-    fields = '__all__'
-    success_url = reverse_lazy('attendance_list')
+def AttendanceCreate(request, pk):
+    if request.method == 'POST':
+        course = Course.objects.get(pk=pk)
+        
 
 
-def AttendanceDelete(request):
+        else:
+            messages.warning(request, 'Course with Registered Day_number Already Exist')
+            return redirect('course_list')
+
+    else:
+        return redirect('course_list')
+    
+
+
+
+def AttendanceDelete(request, pk):
    
    pass
 

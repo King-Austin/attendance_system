@@ -16,7 +16,6 @@ urlpatterns = [
     # Attendance URLs
     path('attendances/<int:pk>/', AttendanceList, name='attendance_list'),
     path('attendances/<int:pk>/create/', AttendanceCreate, name='attendance_create'),
-    #path('attendances/<int:pk>/update/', AttendanceUpdateView.as_view(), name='attendance_update'),
     path('attendances/<int:pk>/delete/', AttendanceDelete, name='attendance_delete'),
 
     # Attendee URLs
