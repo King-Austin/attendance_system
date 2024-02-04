@@ -52,91 +52,63 @@
                     </div>
 
             </div><!-- End Vertically centered Modal-->
-
-            
         </div>
 
 
-    
-    
+
+                <!--  Messages section -->
+            
+                {% if messages %}
+                    {%for message in messages%}
+
+        <div class="alert alert-{{message.tags}} alert-dismissible small fade show no-popup" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        
+                    {%endfor%}
+                {%endif%}
+            <!-- message ends -->
       <section class="section dashboard">
 
             <!--  Courses section -->
+            
     
-        {% if Courses %}
+        {% if courses %}
         {%for course in courses%}
-        <div class="row">
 
-            <!-- Left side columns -->
-            <div class="col-lg-8">
-              <div class="row">
     
                 <!-- Sales Card -->
                 <div class="col-xxl-4 col-md-6">
                   <div class="card info-card sales-card">
     
                     <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-justify"></i></a>
+                      <ul class="dropdown-menu">
     
-                        <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
+                        <li><button class="dropdown-item" href="{% url 'course_delete'%}"><i class="bi bi-trash-fill"></i>delete</button></li>
                       </ul>
                     </div>
     
                     <div class="card-body">
-                      <h5 class="card-title"><i class="bi layers-fill"></i> <span> 2 </span></h5>  
+                      <div class="card-title bi-layers"> <span> {{course.total_attendance}} </span></div> 
                       <div class="d-flex align-items-center">
                         <div class="ps-3">
                           <h6>{{course.name}}</h6>
                         </div>
                       </div>
                     </div>
-    
-                  </div>
-                </div><!-- End Sales Card -->
-    
-                
-          </div>
+                </div>
+            </div>
 
                                                     
         {%endfor%}
     {%endif%}
 <!-- message ends -->
+        </section>
 
 
-      <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
-
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
-                    <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
-                  </ul>
-                </div>
-
-                <div class="card-body">
-                  <h5 class="card-title"><i class="bi layers"></i> <span> 2 </span></h5>  
-                  <div class="d-flex align-items-center">
-                    <div class="ps-3">
-                      <h6>ECE 331</h6>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            
-      </div>
-    </section>
 
   </main><!-- End #main -->
 

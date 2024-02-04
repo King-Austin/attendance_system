@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 
 def CourseList(request):
     course = Course.objects.all().order_by('name')
+    
     context = {'courses':course, 'CourseForm':CourseForm}
     return render(request, template_name='course_list.html', context=context)
 
@@ -27,15 +28,10 @@ def CourseCreate(request):
     else:
         return redirect('course_list')
 
-class CourseUpdateView(UpdateView):
-    model = Course
-    template_name = 'course_update.html'
-    fields = '__all__'
-    success_url = reverse_lazy('course_list')
 
 class CourseDeleteView(DeleteView):
     model = Course
-    template_name = 'course_delete.html'
+    template_name = 'course_list.html'
     success_url = reverse_lazy('course_list')
 
 #<<-- Attendance Views -->> 

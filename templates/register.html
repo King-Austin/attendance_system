@@ -66,11 +66,11 @@
                   </div>
 				  
 
-                  <form method='POST' class="row g-3 needs-validation">
+                  <form method='POST' class="row g-3">
                     {% csrf_token %}
                     <div class="col-12">
                       <label for="yourName" class="form-label" style="font-size: 14px; color:navy">Registration Number</label>
-                      <input class="form-control form-control-user"  type="text" autofocus name="regnumber" inputmode="number" required="" minlength="10" maxlength="10">
+                      <input class="form-control"  type="numeric" autofocus name="regnumber" required minlength="10" maxlength="10">
                      
                     </div>
 

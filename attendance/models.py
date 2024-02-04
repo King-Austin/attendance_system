@@ -5,14 +5,17 @@ from django.contrib.auth.models import User
 class Course(models.Model):
     name_choices = settings.COURSE_LIST
 
-    name = models.CharField(max_length=255, choices=name_choices)
+    name = models.CharField(max_length=255, choices=name_choices, unique=True)
 
     def __str__(self):
         return self.name
+    
+    def total_attendance(self):
+        return self.attendance_set.count()
 
 class Attendance(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default=None)
-    day_number = models.PositiveIntegerField(default=1)
+    day_number = models.PositiveIntegerField(default=0)
     start_date = models.DateField(auto_now=True)
     start_time = models.TimeField(auto_now=True)
     active = models.BooleanField(default=False)

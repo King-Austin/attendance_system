@@ -16,6 +16,21 @@
       </nav>
     </div><!-- End Page Title -->
 
+          <!--  Messages section -->
+      
+          {% if messages %}
+          {%for message in messages%}
+
+          <div class="alert alert-{{message.tags}} alert-dismissible small  fade show no-popup" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          
+          {%endfor%}
+        {%endif%}
+      <!-- message ends -->
+
     <section class="section dashboard">
       <div class="row">
 
