@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Course, Attendance, Attendee
 from django.contrib import messages
 from .forms import CourseForm
@@ -52,18 +52,20 @@ def AttendanceList(request, pk):
 
 def AttendanceCreate(request, pk):
     if request.method == 'POST':
+
         day_number = request.POST['daynumber']
         course = Course.objects.get(pk=pk)
+        attendance_url = reverse('attendance_list', args=[course.id])
         try:
             new = Attendance.objects.create(course=course, day_number=day_number)
             new.save()
             message = 'Creation Success'
             messages.success(request, message)
-            return redirect('attendance_list')
+            return redirect(attendance_url)
         
         except Exception as error:
             messages.warning(request, error)
-            return redirect('attendance_list')
+            return redirect(attendance_url)
 
     else:
         return redirect('attendance_list')
@@ -72,16 +74,18 @@ def AttendanceCreate(request, pk):
 
 
 def AttendanceDelete(request, pk):
+    attendance = Attendance.objects.get(pk=pk)
+    course_pk = attendance.course.id
+    attendance_url = reverse('attendance_list', args=[course_pk])
     try:
-            
-        attendance = Attendance.objects.get(pk=pk)
+           
         attendance.delete()
         messages.success(request, 'Deleted Successfully')
-        return redirect('attendance_list')
+        return redirect(attendance_url)
     
     except Exception as error:
         messages.warning(request, error)
-        return redirect('attendance_list')
+        return redirect(attendance_url)
 
 
 
