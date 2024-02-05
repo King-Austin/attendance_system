@@ -71,7 +71,6 @@
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                    {%if attendance.active %}
                                     <li><a href="{% url 'attendance_deactivate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-wifi-off"></i>Deactivate</button></a></li>
-                                    <li><a href="{% url 'attendance_deactivate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-person-plus-fill"></i>add user</button></a></li>
                                     <li><a href="{% url 'attendance_deactivate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-check"></i>Check In</button></a></li>
 
                                    {% else %}
@@ -92,11 +91,12 @@
                                         {%endif%}
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{course.name}}</h6>
-                                        <span class="text-success small pt-1 fw-bold">Day {{attendance.day_number}}</span>
+                                        <h6>DAY {{attendance.day_number}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">{{attendance.start_time}}</span>
                                     </div>
                                 </div>
                             </div>
+                            <div>{{attendance.start_date}} </div>
                         </div>
                     </div><!-- End Sales Card -->
                 </div>

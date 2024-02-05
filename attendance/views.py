@@ -118,6 +118,7 @@ def AttendanceDeactivate(request, pk):
         return redirect(attendance_url)
 
 
+
 #<<-- Attendee Views -->
 def AttendeeList(request):
     course = Course.objects.get(pk=pk)

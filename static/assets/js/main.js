@@ -95,7 +95,7 @@
         new bootstrap.Toast(alert, {
             animation: true,
             autohide: true,
-            delay: 5000
+            delay: 3000
         }).show();
     });
       
