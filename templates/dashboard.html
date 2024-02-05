@@ -1,7 +1,6 @@
 {% extends "partials/base.html" %}
 
 {% block title %} Dashboard {% endblock %}
-
 {% block content %}
 
 <main id="main" class="main">
@@ -16,64 +15,62 @@
       </nav>
     </div><!-- End Page Title -->
 
-          <!--  Messages section -->
-      
-          {% if messages %}
-          {%for message in messages%}
-
-          <div class="alert alert-{{message.tags}} alert-dismissible small  fade show no-popup" role="alert">
-            {{message}}
-            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-          </div>
-
-          
-          {%endfor%}
-        {%endif%}
-      <!-- message ends -->
+    <!-- Messages section -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible small fade show no-popup" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- Message ends -->
 
     <section class="section dashboard">
-      <div class="row">
+        <div class="row">
 
-        <!-- Left side columns -->
-        <div class="col-lg-8">
-          <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+                <div class="row">
 
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
+                    <!-- Sales Card -->
+                    <div class="col-md-6">
+                        <div class="card info-card sales-card">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown">
+                                    <i class="bi bi-list"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-fill"></i>sign</button></li>
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-check-fill"></i>checked</button></li>
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-plus-fill"></i>add user</button></li>
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
+                                </ul>
+                            </div>
 
-                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-fill"></i>sign</button></li>
-                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-check-fill"></i>checked</button></li>
-                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-plus-fill"></i>add user</button></li>
-                    <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
-                  </ul>
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-people-fill"></i> <span>31</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-wifi"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>ECE 331</h6>
+                                        <span class="text-success small pt-1 fw-bold">Day 3</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Sales Card -->
+
                 </div>
-
-                <div class="card-body">
-                  <h5 class="card-title"><i class="bi bi-people-fill"></i> <span> 31 </span></h5>  
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-wifi"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>ECE 331</h6>
-                      <span class="text-success small pt-1 fw-bold">Day 3</span>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            
-      </div>
+            </div>
+        </div>
     </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
 
-  {% endblock %}
+
+{% endblock %}

@@ -10,128 +10,95 @@
       <h1>Courses</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item">Admin</li>
-          <li class="breadcrumb-item">Courses</li>
+          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Admin</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
           <li class="breadcrumb-item active">{{course.name}}</li>
-
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
-
-        <div class="card">
-
-             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+    <div class="card">
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
             Create Attendance
-            </button>
-            <div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title">New Session</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-
-                            <div class="modal-body">
-                                
-                                <form method='POST' action="{% url 'attendance_create' course.id %}">
-                                        {% csrf_token %}
-                                        <label for='daynumber'>Day_Number</label>
-                                        <input class="form-control" id='daynumber' type="numeric" name="daynumber" required maxlength="3">
-                       
-                        
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Initiate</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+        </button>
+        <div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Session</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-            </div><!-- End Vertically centered Modal-->
-        </div>
-
-
-
-                <!--  Messages section -->
-            
-                {% if messages %}
-                    {%for message in messages%}
-
-        <div class="alert alert-{{message.tags}} alert-dismissible small" role="alert">
-        {{message}}
-        <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        
-                    {%endfor%}
-                {%endif%}
-            <!-- message ends -->
-      <section class="section dashboard">
-
-            <!--  Courses section -->
-            
-    
-        {% if attendances %}
-        {%for attendance in attendances%}
-
-    
-        
-            <div class="row">
-      
-              <!-- Left side columns -->
-              <div class="col-lg-8">
-                <div class="row">
-      
-                  <!-- Sales Card -->
-                  <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card sales-card">
-      
-                      <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-      
-                          <li><button class="dropdown-item" href="#"><i class="bi bi-person-fill"></i>sign</button></li>
-                          <li><button class="dropdown-item" href="#"><i class="bi bi-person-check-fill"></i>checked</button></li>
-                          <li><button class="dropdown-item" href="#"><i class="bi bi-person-plus-fill"></i>add user</button></li>
-                          <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
-                        </ul>
-                      </div>
-      
-                      <div class="card-body">
-                        <h5 class="card-title"><i class="bi bi-people-fill"></i> <span> {{attendance.total_attendees}} </span></h5>  
-                        <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-wifi"></i>
-                          </div>
-                          <div class="ps-3">
-                            <h6>{{course.name}}</h6>
-                            <span class="text-success small pt-1 fw-bold">Day {{attendance.day_number}}</span>
-      
-                          </div>
-                        </div>
-                      </div>
-      
+                    <div class="modal-body">
+                        <form method='POST' action="{% url 'attendance_create' course.id %}">
+                            {% csrf_token %}
+                            <label for='daynumber'>Day_Number</label>
+                            <input class="form-control" id='daynumber' type="number" name="daynumber" required maxlength="3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Initiate</button>
+                            </div>
+                        </form>
                     </div>
-                  </div><!-- End Sales Card -->
-      
-                  
+                </div>
             </div>
-          
+        </div><!-- End Vertically centered Modal -->
+    </div>
 
-              </div>
+    <!-- Messages section -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible small" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- Message ends -->
 
-                                                    
-        {%endfor%}
-        {%else%}
-              <h7>No Registered Attendance !<h7>
-    {%endif%}
-<!-- message ends -->
-        </section>
+    <section class="section dashboard">
+        <!-- Courses section -->
+        {% if attendances %}
+        {% for attendance in attendances %}
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-fill"></i>sign</button></li>
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-check-fill"></i>checked</button></li>
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-person-plus-fill"></i>add user</button></li>
+                                    <li><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-people-fill"></i> <span>{{attendance.total_attendees}}</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-wifi"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{course.name}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">Day {{attendance.day_number}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Sales Card -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h6>No Registered Attendance!</h6>
+        {% endif %}
+        <!-- Message ends -->
+    </section>
+</main><!-- End #main -->
 
 
-
-  </main><!-- End #main -->
-
-  {% endblock %}
+{% endblock %}
