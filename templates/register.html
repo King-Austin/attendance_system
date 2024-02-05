@@ -51,18 +51,16 @@
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4" style = "border-bottom-color:blue;">Create an Account</h5>
 					
-                      <!--  Messages section -->
-                        
-                        {% if messages %}
-                        {%for message in messages%}
-          
-                        <div class="alert alert-{{message.tags}} alert-dismissible small fade show no-popup" role="alert">
-                          {{message}}
-                          <button onclick="alert.close()" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-			  {%endfor%}
-			  {%endif%}
-                    <!-- message ends -->
+    <!-- Messages section -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible small" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- Message ends -->
                   </div>
 				  
 

@@ -42,7 +42,7 @@ def CourseDelete(request, pk):
 def AttendanceList(request, pk):
     course = Course.objects.get(pk=pk)
 
-    attendance = Attendance.objects.filter(course=pk).order_by('start_date')
+    attendance = Attendance.objects.filter(course=pk).order_by('day_number')
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex) # the need for the profile picture
 
@@ -87,13 +87,47 @@ def AttendanceDelete(request, pk):
         messages.warning(request, error)
         return redirect(attendance_url)
 
+def AttendanceActivate(request, pk):
+    attendance = Attendance.objects.get(pk=pk)
+    course_pk = attendance.course.id
+    attendance_url = reverse('attendance_list', args=[course_pk])
+    try:
+           
+        attendance.active = True
+        attendance.save()
+        messages.success(request, 'Course Activated')
+        return redirect(attendance_url)
+    
+    except Exception as error:
+        messages.warning(request, error)
+        return redirect(attendance_url)
+
+def AttendanceDeactivate(request, pk):
+    attendance = Attendance.objects.get(pk=pk)
+    course_pk = attendance.course.id
+    attendance_url = reverse('attendance_list', args=[course_pk])
+    try:
+           
+        attendance.active = False
+        attendance.save()
+        messages.success(request, 'Course Deactivated')
+        return redirect(attendance_url)
+    
+    except Exception as error:
+        messages.warning(request, error)
+        return redirect(attendance_url)
 
 
 #<<-- Attendee Views -->
-class AttendeeListView(ListView):
-    model = Attendee
-    template_name = 'attendee_list.html'
-    context_object_name = 'attendees'
+def AttendeeList(request):
+    course = Course.objects.get(pk=pk)
+
+    attendance = Attendance.objects.filter(course=pk).order_by('start_date')
+    student = Student.objects.get(reg_number=request.user)
+    sex = {'M':'male'}.get(student.sex) # the need for the profile picture
+
+    context = {'attendances':attendance, 'course':course, 'sex':sex}
+    return render(request, template_name='attendance_list.html', context=context)
 
 class AttendeeDetailView(DetailView):
     model = Attendee
