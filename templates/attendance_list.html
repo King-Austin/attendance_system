@@ -1,5 +1,5 @@
 {% extends "partials/base.html" %}
-
+{%load humanize %}
 {% block title %} Attendance {% endblock %}
 
 {% block content %}
@@ -32,7 +32,7 @@
                         <form method='POST' action="{% url 'attendance_create' course.id %}">
                             {% csrf_token %}
                             <label for='daynumber'>Day_Number</label>
-                            <input class="form-control" id='daynumber' type="number" name="daynumber" required maxlength="3">
+                            <input class="form-control" id='daynumber'  type="numeric" name="daynumber" required maxlength="3">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Create</button>
@@ -59,29 +59,29 @@
         <!-- Courses section -->
         {% if attendances %}
         {% for attendance in attendances %}
-        <div class="row">
+        <div class="row ">
             <!-- Left side columns -->
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-xxl-2">
                 <div class="row">
                     <!-- Sales Card -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card sales-card">
+                    <div class="col-xxl-3 col-md-6 ">
+                        <div class="card  info-card sales-card">
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-list"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                    {%if attendance.active %}
                                     <li><a href="{% url 'attendance_deactivate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-wifi-off"></i>Deactivate</button></a></li>
-                                    <li><a href="{% url 'attendance_deactivate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-check"></i>Check In</button></a></li>
+                                    <li><a href="{% url 'attendance_deactivate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-pen"></i>Edit</button></a></li>
 
                                    {% else %}
                                    <li><a href="{% url 'attendance_activate' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-wifi"></i>Activate</button></a></li>
 
-                                   <li><a href="{% url 'attendance_delete' attendance.id %}"<button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></a></li>
+                                   <li><a href="{% url 'attendance_delete' attendance.id %}"><button class="dropdown-item" href="#"><i class="bi bi-trash-fill"></i>delete</button></a></li>
                                   {%endif%}
                                 </ul>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title"><i class="bi bi-people-fill"></i> <span>{{attendance.total_attendees}}</span></h5>
+                                <h5 class="card-title"><i class="bi bi-people-fill"></i> <span>{{attendance.total_attendees}}  <span style='color:#012970; padding-left:11px; font-size:12px;'><i class='bi bi-clock-fill'></i><span style='color:#899bbd; padding-left:11px; font-size:12px;'>{{attendance.start_date}}</span></span> </span></h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         {%if attendance.active%}
@@ -91,12 +91,11 @@
                                         {%endif%}
                                     </div>
                                     <div class="ps-3">
-                                        <h6>DAY {{attendance.day_number}}</h6>
-                                        <span class="text-success small pt-1 fw-bold">{{attendance.start_time}}</span>
+                                        <h6><a href="{% url 'attendee_list' attendance.id %}">DAY {{attendance.day_number|apnumber }}</a></h6>
+                                        <span class="text-success small pt-1 fw-bold">{{attendance.start_time}} </span>
                                     </div>
                                 </div>
                             </div>
-                            <div>{{attendance.start_date}} </div>
                         </div>
                     </div><!-- End Sales Card -->
                 </div>

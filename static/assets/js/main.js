@@ -90,12 +90,11 @@
 
   
     // Slow transition effect for alert messages
-    var alertList = document.querySelectorAll('.alert');
     alertList.forEach(function (alert) {
         new bootstrap.Toast(alert, {
             animation: true,
             autohide: true,
-            delay: 3000
+            delay: 5000
         }).show();
     });
       

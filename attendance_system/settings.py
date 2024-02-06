@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize',
     'django.contrib.staticfiles',
 
     #-- My Apps-- #
@@ -128,6 +129,7 @@ TIME_ZONE = 'Africa/Lagos'
 USE_I18N = False
 
 USE_TZ = True
+USE_L1ON = True
 
 
 # Static files (CSS, JavaScript, Images)

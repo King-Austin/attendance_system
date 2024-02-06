@@ -4,7 +4,7 @@ from django.urls import path
 from .views import (
     CourseList, CourseCreate, CourseDelete,
     AttendanceList, AttendanceCreate, AttendanceActivate, AttendanceDeactivate, AttendanceDelete,
-    AttendeeList, AttendeeCreateView, AttendeeDeleteView
+    AttendeeList, AttendeeCreate, AttendeeDelete
 )
 
 urlpatterns = [
@@ -23,6 +23,6 @@ urlpatterns = [
 
     # Attendee URLs
     path('attendees/<int:pk>/', AttendeeList, name='attendee_list'),
-    path('attendees/<int:pk>/create/', AttendeeCreateView.as_view(), name='attendee_create'),
-    path('attendees/<int:pk>/delete/', AttendeeDeleteView.as_view(), name='attendee_delete'),
+    path('attendees/<int:pk>/create/', AttendeeCreate, name='attendee_create'),
+    path('attendees/<int:pk>/delete/', AttendeeDelete, name='attendee_delete'),
 ]

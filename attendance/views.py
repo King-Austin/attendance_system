@@ -4,6 +4,7 @@ from .models import Course, Attendance, Attendee
 from django.contrib import messages
 from .forms import CourseForm
 from students.models import Student
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 
@@ -120,34 +121,48 @@ def AttendanceDeactivate(request, pk):
 
 
 #<<-- Attendee Views -->
-def AttendeeList(request):
-    course = Course.objects.get(pk=pk)
-
-    attendance = Attendance.objects.filter(course=pk).order_by('start_date')
+def AttendeeList(request, pk):
+    attendance = Attendance.objects.get(pk=pk)
+    attendee = Attendee.objects.filter(attendance=pk).order_by('signed_time')
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex) # the need for the profile picture
 
-    context = {'attendances':attendance, 'course':course, 'sex':sex}
-    return render(request, template_name='attendance_list.html', context=context)
+    context = {'attendee':attendee, 'attendance':attendance, 'sex':sex}
+    return render(request, template_name='attendee_list.html', context=context)
 
-class AttendeeDetailView(DetailView):
-    model = Attendee
-    template_name = 'attendee_detail.html'
-    context_object_name = 'attendee'
 
-class AttendeeCreateView(CreateView):
-    model = Attendee
-    template_name = 'attendee_create.html'
-    fields = '__all__'
-    success_url = reverse_lazy('attendee_list')
 
-class AttendeeUpdateView(UpdateView):
-    model = Attendee
-    template_name = 'attendee_update.html'
-    fields = '__all__'
-    success_url = reverse_lazy('attendee_list')
 
-class AttendeeDeleteView(DeleteView):
-    model = Attendee
-    template_name = 'attendee_delete.html'
-    success_url = reverse_lazy('attendee_list')
+def AttendeeDelete(request, pk):
+    attendee = Attendee.objects.get(pk=pk)
+    attendee_url = reverse('attendee_list', args=[pk])
+    attendee.delete()
+    return redirect(attendee_url)
+
+
+def AttendeeCreate(request, pk):
+    if request.method == 'POST':
+        student_reg_number = request.POST['regnumber']
+        attendance = Attendance.objects.get(pk=pk)
+        attendee_url = reverse('attendee_list', args=[pk])
+
+        user = User.objects.filter(username=student_reg_number).exists()
+        if user:
+            try:
+                user = User.objects.get(username=student_reg_number)
+                new_attendee = Attendee.objects.create(user=user, attendance=attendance)
+                new_attendee.save()
+                message = 'Added Successfully !'
+                messages.success(request, message)
+                redirect('dashboard')
+            except Exception as error:
+                messages.warning(request, error)
+                redirect('dashboard')
+        else:
+            message = 'User Not Registered'
+            messages.warning(request, message)
+            print(message)
+            redirect('course_list')
+    
+    else:
+        return redirect('dashboard')

@@ -1,0 +1,72 @@
+{% extends "partials/base.html" %}
+{%load humanize %}
+{% block title %} Attendee {% endblock %}
+
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Courses</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Admin</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'attendance_list' attendance.course.id %}">Attendance</a></li>
+          <li class="breadcrumb-item active">{{attendance.course}}</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <div class="card">
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+            Add Student
+        </button>
+        <div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Student</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method='POST' action="{% url 'attendee_create' attendance.id %}">
+                            {% csrf_token %}
+                            <label for='regnumber'>Student Reg Number</label>
+                            <input class="form-control" id='regnumber' type="numeric" name="regnumber" required maxlength="10" minlength="10">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Vertically centered Modal -->
+    </div>
+
+    <!-- Messages section -->
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible small" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!-- Message ends -->
+
+    <section class="section dashboard">
+        <!-- Courses section -->
+        {% if attendee %}
+        {% for student in attendee %}
+        <p>{{student.user.username}}-{{student.user.first_name}} </p>
+        {% endfor %}
+        {% else %}
+        <h6>No Registered Attendance!</h6>
+        {% endif %}
+        <!-- Message ends -->
+    </section>
+</main><!-- End #main -->
+
+
+{% endblock %}
