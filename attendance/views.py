@@ -123,7 +123,7 @@ def AttendanceDeactivate(request, pk):
 #<<-- Attendee Views -->
 def AttendeeList(request, pk):
     attendance = Attendance.objects.get(pk=pk)
-    attendee = Attendee.objects.filter(attendance=pk).order_by('signed_time')
+    attendee = Attendee.objects.filter(attendance_id=pk).order_by('signed_time')
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex) # the need for the profile picture
 
@@ -150,7 +150,7 @@ def AttendeeCreate(request, pk):
         if user:
             try:
                 user = User.objects.get(username=student_reg_number)
-                new_attendee = Attendee.objects.create(user=user, attendance=attendance)
+                new_attendee = Attendee.objects.create(user=user, attendance=pk)
                 new_attendee.save()
                 message = 'Added Successfully !'
                 messages.success(request, message)

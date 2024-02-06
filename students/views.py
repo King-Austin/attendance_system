@@ -180,15 +180,15 @@ def forgotPassword(request):
         email = request.POST['email']
 
         try:
-            user = User.objects.get(username=request.user)
+            user = User.objects.get(email=email)
 
-            message = 'Profile Update Successful!'
+            message = 'A reset link has been sent to your email!'
             messages.success(request, message)
             
-            return redirect('setting')
+            return redirect('login')
 
         except:
-            message = 'Something went wrong !'
+            message = 'No account registered with given email'
             messages.warning(request, message)
             return redirect ('setting')
         
