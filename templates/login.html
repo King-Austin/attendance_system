@@ -17,6 +17,7 @@
 
   <!-- Vendor CSS Files -->
   <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  
 
 
 
@@ -54,10 +55,12 @@
 <!-- Messages section -->
 {% if messages %}
 {% for message in messages %}
+
 <div class="alert alert-{{message.tags}} alert-dismissible small" role="alert">
     {{message}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
 {% endfor %}
 {% endif %}
 <!-- Message ends -->
@@ -120,6 +123,10 @@
   </main><!-- End #main -->
     <!-- Template Main JS File -->
     <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <script src= "{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
 
 
 
