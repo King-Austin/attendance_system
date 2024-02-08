@@ -60,12 +60,13 @@ def AttendanceCreate(request, pk):
         try:
             new = Attendance.objects.create(course=course, day_number=day_number)
             new.save()
-            message = 'Creation Success'
+            message = f'DAY {day_number} Creation Success'
             messages.success(request, message)
             return redirect(attendance_url)
         
         except Exception as error:
-            messages.warning(request, error)
+            message = f'DAY {day_number} already Exist'
+            messages.warning(request, message)
             return redirect(attendance_url)
 
     else:
@@ -80,8 +81,9 @@ def AttendanceDelete(request, pk):
     attendance_url = reverse('attendance_list', args=[course_pk])
     try:
            
+        message = f'{attendance.course} -DAY {attendance.day_number} Delete Success'
         attendance.delete()
-        messages.success(request, 'Deleted Successfully')
+        messages.success(request, message)
         return redirect(attendance_url)
     
     except Exception as error:
@@ -96,7 +98,8 @@ def AttendanceActivate(request, pk):
            
         attendance.active = True
         attendance.save()
-        messages.success(request, 'Course Activated')
+        message = f'{attendance.course} -DAY {attendance.day_number} Activated'
+        messages.success(request, message)
         return redirect(attendance_url)
     
     except Exception as error:
@@ -111,7 +114,8 @@ def AttendanceDeactivate(request, pk):
            
         attendance.active = False
         attendance.save()
-        messages.success(request, 'Course Deactivated')
+        message = f'{attendance.course} -DAY {attendance.day_number} Deactivated'
+        messages.success(request, message)
         return redirect(attendance_url)
     
     except Exception as error:
@@ -135,7 +139,7 @@ def AttendeeList(request, pk):
 
 def AttendeeDelete(request, pk):
     attendee = Attendee.objects.get(pk=pk)
-    attendee_url = reverse('attendee_list', args=[pk])
+    attendee_url = reverse('attendee_list', args=[attendee.attendance.id])
     attendee.delete()
     return redirect(attendee_url)
 
@@ -150,19 +154,20 @@ def AttendeeCreate(request, pk):
         if user:
             try:
                 user = User.objects.get(username=student_reg_number)
-                new_attendee = Attendee.objects.create(user=user, attendance=pk)
+                new_attendee = Attendee.objects.create(user=user, attendance=attendance)
                 new_attendee.save()
-                message = 'Added Successfully !'
+                message = f'{student_reg_number}-{user.first_name} Added Successfully !'
                 messages.success(request, message)
-                redirect('dashboard')
+                return redirect(attendee_url)
             except Exception as error:
-                messages.warning(request, error)
-                redirect('dashboard')
+                message = f'{student_reg_number} already signed  !'
+                messages.warning(request, message)
+                return redirect(attendee_url)
         else:
             message = 'User Not Registered'
             messages.warning(request, message)
             print(message)
-            redirect('course_list')
+            return redirect(attendee_url)
     
     else:
-        return redirect('dashboard')
+        return redirect(attendee_url)

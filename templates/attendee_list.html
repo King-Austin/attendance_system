@@ -12,9 +12,9 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Admin</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'attendance_list' attendance.id %}">Attendance</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'attendance_list' attendance.course.id %}">Attendance</a></li>
           <li class="breadcrumb-item">{{attendance.course.name}}</li>
-          <li class="breadcrumb-item active">{{attendance.day_number}}</li>
+          <li class="breadcrumb-item active">Day {{attendance.day_number}}</li>
 
         </ol>
       </nav>
@@ -34,10 +34,10 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form method='POST' action="#">
+                            <form method='POST' action="{% url 'attendee_create' attendance.id %}">
                                 {% csrf_token %}
                                 <label for='daynumber'>Reg_Number</label>
-                                <input class="form-control" id='regnumber'  type="numeric" name="daynumber" required minlength='10' maxlength="10">
+                                <input class="form-control" id='regnumber'  type="numeric" name="regnumber" required minlength='10' maxlength="10">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Add</button>
@@ -65,7 +65,7 @@
 {% if attendee %}
     <div class="card">
         <div class="card-body">
-          <h5 class="card-title"> {{attendance.course}} {{attendance.day_number}} </h5>
+          <h5 class="card-title"> {{attendance.course}} - DAY {{attendance.day_number}} </h5>
 
           <!-- Table with stripped rows -->
           <table class="table table-striped">
@@ -82,8 +82,10 @@
               <tr>
                 <th scope="row">1</th>
                 <td>{{student.user.username}}</td>
-                <td>{{student.user.first_name}} {{student.user.last_name}}</td>
+                <td>{{student.user.first_name|title}}</td>
                 <td> {{student.signed_time|naturalday}} </td>
+                <td><a href="{% url 'attendee_delete' student.id %}"><i class="bi bi-trash-fill"></i></a></td>
+
               </tr>
             {% endfor %}
             </tbody>
