@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import views as authViews
-from django.http import HttpResponse
-from django.urls import reverse
+from attendance.models import Attendance
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -13,18 +12,15 @@ from django.contrib.auth.decorators import login_required
 
 @login_required()
 def dashboard(request):
+    student = Student.objects.get(reg_number=request.user)
+    sex = {'M':'male'}.get(student.sex) # the need for the profile picture
+    attendance = Attendance.objects.filter(active=True).order_by('start_date')
 
-    
-    try:   
-        ref = Student.objects.get(reg_number=request.user).sex
-        sex = {'M':'male'}.get(ref)
-    except:
-        sex = 'M'
-
-    return render(request, template_name='dashboard.html', context={'sex':sex})
+    return render(request, template_name='dashboard.html', context={'sex':sex, 'attendances':attendance})
 
     
 # ======== Register Student view ==================================#
+
 def registerView(request):
     if request.method == 'POST':
         # user registration process

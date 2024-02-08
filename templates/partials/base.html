@@ -22,11 +22,12 @@
   <!-- Vendor CSS Files -->
   <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
 
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -137,10 +138,17 @@
 
       <li class="nav-item">
         <a class="nav-link " href="{% url 'dashboard' %}">
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-house-door"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'setting' %}">
+          <i class="bi bi-gear"></i>
+          <span>Setting</span>
+        </a>
+      </li>
 
       
 
@@ -154,6 +162,13 @@
           <span>Courses</span>
         </a>
       </li><!-- End Profile Page Nav -->
+  
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'course_list' %}">
+          <i class="bi bi-person-check"></i>
+          <span>Host</span>
+        </a>
+      </li><!-- End Admin Page Nav -->
 
       
     </ul>
@@ -181,10 +196,12 @@
 
 
   <!-- Vendor JS Files -->
-  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Template Main JS File -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'assets/js/main.js' %}"></script>
+
+
 
 
 

@@ -166,7 +166,6 @@ def AttendeeCreate(request, pk):
         else:
             message = 'User Not Registered'
             messages.warning(request, message)
-            print(message)
             return redirect(attendee_url)
     
     else:
