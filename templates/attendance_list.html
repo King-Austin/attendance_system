@@ -32,7 +32,7 @@
                         <form method='POST' action="{% url 'attendance_create' course.id %}">
                             {% csrf_token %}
                             <label for='daynumber'>Day_Number</label>
-                            <input class="form-control" id='daynumber'  type="numeric" name="daynumber" required maxlength="3">
+                            <input class="form-control" id='daynumber'  type="number" name="daynumber" required max=50 min=0>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Create</button>
@@ -91,7 +91,7 @@
                                         {%endif%}
                                     </div>
                                     <div class="ps-3">
-                                        <h6><a href="{% url 'attendee_list' attendance.id %}">DAY {{attendance.day_number|apnumber }}</a></h6>
+                                        <h6><a href="{% url 'attendee_list' attendance.id %}">DAY {{attendance.day_number }}</a></h6>
                                         <span class="text-success small pt-1 fw-bold">{{attendance.start_time}} </span>
                                     </div>
                                 </div>
