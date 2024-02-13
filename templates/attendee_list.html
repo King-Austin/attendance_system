@@ -75,7 +75,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">#</th>
+ 
                 <th scope="col">Regnumber</th>
                 <th scope="col">Name</th>
                 <th scope="col">Time</th>
@@ -84,10 +84,9 @@
             <tbody>
             {% for student in attendee %}
               <tr>
-                <th scope="row">1</th>
                 <td>{{student.user.username}}</td>
                 <td>{{student.user.first_name|title}}</td>
-                <td> {{student.signed_time|naturalday}} </td>
+                <td> {{student.signed_time|naturaltime}} </td>
                 <td><a href="{% url 'attendee_delete' student.id %}"><i class="bi bi-trash-fill"></i></a></td>
 
               </tr>
