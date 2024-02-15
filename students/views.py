@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from . models import Student
-from django.contrib.auth.decorators import login_required
+from .decorators import login_required
 
 
 # Create your views here.
 
-@login_required()
+@login_required
 def dashboard(request):
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex) # the need for the profile picture
@@ -103,20 +103,20 @@ def logoutView(request):
     messages.success(request, 'You have successfully logged out.')
     return redirect ('login')
 
-@login_required()
+@login_required
 def userProfile(request):
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex)
 
     return render(request, template_name='profile.html', context={'sex':sex, 'student':student})
 
-@login_required()  
+@login_required  
 def userSetting(request):
     student = Student.objects.get(reg_number=request.user)
     sex = {'M':'male'}.get(student.sex)
     return render(request, template_name='setting.html', context={'sex':sex, 'student':student})
 
-@login_required()
+@login_required
 def passwordChange(request):
     user = request.user
     if request.method == 'POST':
@@ -140,7 +140,7 @@ def passwordChange(request):
     else:
         return redirect('setting')
 
-@login_required() 
+@login_required 
 def editProfile(request):
 
     if request.method == 'POST':

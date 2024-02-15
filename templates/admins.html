@@ -1,6 +1,6 @@
 {% extends "partials/base.html" %}
 {%load humanize %}
-{% block title %} Attendees {% endblock %}
+{% block title %} Admins {% endblock %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
     
 
     <div class="pagetitle">
-      <h1>Attendees</h1>
+      <h1>Authorized Admins</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Admin</a></li>
@@ -23,14 +23,14 @@
 
         <div class="card">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
-                <i class="bi bi-person-plus-fill" ></i> Add Student
+                <i class="bi bi-person-plus-fill" ></i> Add Admin
 
             </button>
             <div class="modal fade" id="verticalycentered" tabindex="-1" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Add Student</h5>
+                            <h5 class="modal-title">Adminship </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -40,7 +40,7 @@
                                 <input class="form-control" id='regnumber'  type="numeric" name="regnumber" required minlength='10' maxlength="10">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Add</button>
+                                    <button type="submit" class="btn btn-primary">Authorize</button>
                                 </div>
                             </form>
                         </div>
@@ -63,13 +63,13 @@
 
     
 
-  {% if attendee %}
+  {% if admins %}
   <section class="section">
     <div class="row">
       <div class="col-lg-12">
       <div class="card">
           <div class="card-body">
-            <h5 class="card-title"> {{attendance.course}} - DAY {{attendance.day_number}} </h5>
+            <h5 class="card-title">Authorized Admins</h5>
 
             <!-- Table with stripped rows -->
             <table class="table table-striped">
@@ -78,15 +78,15 @@
   
                   <th scope="col">Regnumber</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Time</th>
+                  <th scope='col'></th>
+    
                 </tr>
               </thead>
               <tbody>
-              {% for student in attendee %}
+              {% for student in admins %}
                 <tr>
                   <td>{{student.user.username}}</td>
                   <td>{{student.user.first_name|title}}</td>
-                  <td> {{student.signed_time|naturaltime}} </td>
                   <td><a href="{% url 'attendee_delete' student.id %}"><i class="bi bi-trash-fill"></i></a></td>
 
                 </tr>

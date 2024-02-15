@@ -1,14 +1,13 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from .models import Course, Attendance, Attendee
 from django.contrib import messages
 from .forms import CourseForm
 from students.models import Student
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from .decorator import student_admin_required
 
-
-
+@student_admin_required
 def CourseList(request):
     course = Course.objects.all().order_by('name')
     student = Student.objects.get(reg_number=request.user)
@@ -17,6 +16,7 @@ def CourseList(request):
     return render(request, template_name='course_list.html', context=context)
 
 #-- Create a course-#
+@student_admin_required
 def CourseCreate(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
@@ -31,7 +31,7 @@ def CourseCreate(request):
     else:
         return redirect('course_list')
 
-
+@student_admin_required
 def CourseDelete(request, pk):
     course = Course.objects.get(pk=pk)
     course.delete()
@@ -39,7 +39,8 @@ def CourseDelete(request, pk):
 
     return redirect('course_list')
 
-#<<-- Attendance Views -->> 
+#<<-- Attendance Views -->>
+@student_admin_required
 def AttendanceList(request, pk):
     course = Course.objects.get(pk=pk)
 
@@ -50,7 +51,7 @@ def AttendanceList(request, pk):
     context = {'attendances':attendance, 'course':course, 'sex':sex}
     return render(request, template_name='attendance_list.html', context=context)
 
-
+@student_admin_required
 def AttendanceCreate(request, pk):
     if request.method == 'POST':
 
@@ -74,7 +75,7 @@ def AttendanceCreate(request, pk):
     
 
 
-
+@student_admin_required
 def AttendanceDelete(request, pk):
     attendance = Attendance.objects.get(pk=pk)
     course_pk = attendance.course.id
@@ -90,6 +91,7 @@ def AttendanceDelete(request, pk):
         messages.warning(request, error)
         return redirect(attendance_url)
 
+@student_admin_required
 def AttendanceActivate(request, pk):
     attendance = Attendance.objects.get(pk=pk)
     course_pk = attendance.course.id
@@ -106,6 +108,7 @@ def AttendanceActivate(request, pk):
         messages.warning(request, error)
         return redirect(attendance_url)
 
+@student_admin_required
 def AttendanceDeactivate(request, pk):
     attendance = Attendance.objects.get(pk=pk)
     course_pk = attendance.course.id
@@ -136,12 +139,13 @@ def AttendeeList(request, pk):
 
 
 
-
+@student_admin_required
 def AttendeeDelete(request, pk):
     attendee = Attendee.objects.get(pk=pk)
     attendee_url = reverse('attendee_list', args=[attendee.attendance.id])
     attendee.delete()
     return redirect(attendee_url)
+
 
 
 def AttendeeCreate(request, pk):
@@ -170,3 +174,16 @@ def AttendeeCreate(request, pk):
     
     else:
         return redirect(attendee_url)
+
+def StudentAdmin(request):
+
+    admins = Student.objects.filter(admin=True).order_by('reg_number')
+    context = {'admins':admins}
+    return render(request, template_name=admins.html, context=context)
+
+
+def PermissionDenied(request):
+    return render(request, template_name='permission_denied.html')
+
+def Development(request):
+    return render(request, template_name='development.html')
