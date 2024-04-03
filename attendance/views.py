@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .decorator import student_admin_required
 
-@student_admin_required
+
 def CourseList(request):
     course = Course.objects.all().order_by('name')
     student = Student.objects.get(reg_number=request.user)
@@ -40,7 +40,7 @@ def CourseDelete(request, pk):
     return redirect('course_list')
 
 #<<-- Attendance Views -->>
-@student_admin_required
+
 def AttendanceList(request, pk):
     course = Course.objects.get(pk=pk)
 
@@ -147,7 +147,7 @@ def AttendeeDelete(request, pk):
     return redirect(attendee_url)
 
 
-
+@student_admin_required
 def AttendeeCreate(request, pk):
     if request.method == 'POST':
         student_reg_number = request.POST['regnumber']
@@ -175,11 +175,45 @@ def AttendeeCreate(request, pk):
     else:
         return redirect(attendee_url)
 
+#----------Adminship Views ------------#
+    
 def StudentAdmin(request):
 
     admins = Student.objects.filter(admin=True).order_by('reg_number')
     context = {'admins':admins}
-    return render(request, template_name=admins.html, context=context)
+    return render(request, template_name='admins.html', context=context)
+
+
+def StudentAdminCreate(request):
+    if request.method == 'POST':
+        student_reg_number = request.POST['regnumber']
+
+        user = User.objects.filter(username=student_reg_number).exists()
+        if user:
+            try:
+                admin = Student.objects.get(reg_number = student_reg_number)
+                admin.admin = True
+                admin.save()
+                message = f'{student_reg_number}-{user.first_name} Added Successfully !'
+                messages.success(request, message)
+                return redirect('admin_list')
+            except Exception as error:
+                message = f'{student_reg_number} already signed  !'
+                messages.warning(request, message)
+                return redirect('admin_list')
+        else:
+            message = 'User Not Registered'
+            messages.warning(request, message)
+            return redirect('admin_list')
+    
+    else:
+        return redirect('admin_list')
+
+def StudentAdminDelete(request, pk):
+    admin = Student.objects.get(id=pk)
+    admin.admin=False
+    admin.save()
+    return redirect ('admin_list')
 
 
 def PermissionDenied(request):
